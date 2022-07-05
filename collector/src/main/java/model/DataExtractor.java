@@ -26,18 +26,16 @@ public class DataExtractor {
         this.intervalQuery = intervalQuery;
         this.intervalValue = intervalValue;
     }
+
     public ArrayList<CandleData> getCandleData(String startValue, String endValue) {
         var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(
-                        URI.create(url + "?" + symbolQuery + "=" + symbolValue + "&" + startQuery + "=" + startValue + "&" + endQuery + "=" + endValue + "&" + intervalQuery + "=" + intervalValue))
-                .header("accept", "application/json")
-                .build();
+        var request = HttpRequest.newBuilder(URI.create(url + "?" + symbolQuery + "=" + symbolValue + "&" + startQuery + "=" + startValue + "&" + endQuery + "=" + endValue + "&" + intervalQuery + "=" + intervalValue)).header("accept", "application/json").build();
         try {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject obj = new JSONObject(response.body());
             var t = obj.getJSONArray("data");
             var res = new ArrayList<CandleData>();
-            for(int i=0; i<t.length(); i++) {
+            for (int i = 0; i < t.length(); i++) {
                 var o = t.get(i);
                 var m = o.toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
                 res.add(CandleData.BuildFromArray(m, symbolValue));
