@@ -10,13 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ProducerUtil {
     private Properties props;
-    private String topicName;
     private Long timeout;
     private Producer<Long, CandleData> producer;
 
-    public ProducerUtil(Properties props, String topicName, Long timeout) {
+    public ProducerUtil(Properties props, Long timeout) {
         this.props = props;
-        this.topicName = topicName;
         this.producer = new KafkaProducer<>(props);
         this.timeout = timeout;
     }
