@@ -1,4 +1,4 @@
-package core;
+package models;
 
 import model.CandleData;
 import models.Alarm;
