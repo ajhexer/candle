@@ -40,7 +40,7 @@ public class DataExtractor {
             for(int i=0; i<t.length(); i++) {
                 var o = t.get(i);
                 var m = o.toString().replace("[", "").replace("]", "").replace("\"", "").split(",");
-                res.add(CandleData.BuildFromArray(m));
+                res.add(CandleData.BuildFromArray(m, symbolValue));
             }
             return res;
         } catch (Exception e) {

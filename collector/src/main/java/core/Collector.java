@@ -28,7 +28,7 @@ public class Collector implements Runnable{
             try{
                 for (CandleData candle : candles) {
                     try {
-                        System.out.println(candle.getOpeningPrice());
+                        System.out.println("Open: " + candle.getOpeningPrice() + " " + "Close: " + candle.getClosingPrice() + " " + "Market: " + candle.getMarketSymbol());
                         this.producer.Send(new ProducerRecord<>(topicName, candle.getTimeStamp(), candle));
                     } catch (Exception e) {
                         e.printStackTrace();
