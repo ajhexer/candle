@@ -36,9 +36,6 @@ public class Alarm {
         this.time = time;
     }
 
-    public Alarm() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -57,5 +54,9 @@ public class Alarm {
 
     public Time getTime() {
         return time;
+    }
+
+    public String getIndicator() {
+        return indicator;
     }
 }

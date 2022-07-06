@@ -4,6 +4,8 @@ import model.CandleData;
 import models.Alarm;
 import models.Rule;
 
+import java.lang.reflect.Field;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,21 +14,23 @@ import java.util.logging.Logger;
 
 public class SMARule implements Rule {
     private String ruleName;
-    private String marketSymbol;
     private String fieldName1;
     private String fieldName2;
     private Long interval1;
     private Long interval2;
     private Comparator<Float> comparator;
+    private String marketSymbol;
 
-    public SMARule(String fieldName1, String fieldName2, Long interval1, Long interval2, Comparator<Float> comparator, String marketSymbol, String ruleName) {
+
+    public SMARule(String fieldName1, String fieldName2, Long interval1, Long interval2, Comparator<Float> comparator, String ruleName, String marketSymbol) {
         this.fieldName1 = fieldName1;
         this.fieldName2 = fieldName2;
         this.interval1 = interval1;
         this.interval2 = interval2;
         this.comparator = comparator;
-        this.marketSymbol = marketSymbol;
         this.ruleName = ruleName;
+        this.marketSymbol = marketSymbol;
+
     }
 
     @Override
@@ -41,11 +45,10 @@ public class SMARule implements Rule {
 
         var sum1 = getAverage(candleData, index1, fieldName1);
         var sum2 = getAverage(candleData, index2, fieldName2);
-
-        if (comparator.compare(sum1, sum2)<0){
-            return new Alarm();
+        if (comparator.compare(sum1, sum2)>=0){
+            return new Alarm(ruleName, marketSymbol, "SMA", candleData.get(candleData.size()-1).getClosingPrice(), new Time(System.currentTimeMillis()));
         }
-        
+
         return null;
     }
 
@@ -53,7 +56,10 @@ public class SMARule implements Rule {
         float result = 0;
         for(int i=index; i<candleData.size(); i++){
             try{
-                result += (float) candleData.get(i).getClass().getDeclaredField(fieldName).get(candleData.get(i));
+                Field f = candleData.get(i).getClass().getDeclaredField(fieldName);
+                f.setAccessible(true);
+                result += (float) f.get(candleData.get(i));
+//                result+=(float) candleData.get(i).getClass().getDeclaredMethod(fieldName).;
             }catch (Exception e){
                 e.printStackTrace();
             }
