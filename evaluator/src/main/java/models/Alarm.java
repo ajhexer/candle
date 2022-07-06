@@ -1,15 +1,8 @@
 package models;
 
-//import jakarta.persistence.*;
-
-
-
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Table;
 
-import javax.annotation.processing.Generated;
 import java.sql.Time;
 
 @Entity
@@ -28,12 +21,16 @@ public class Alarm {
     @Column(name = "TIME")
     private Time time;
 
+
     public Alarm(String alarmName, String marketSymbol, String indicator, float currentPrice, Time time) {
         this.alarmName = alarmName;
         this.marketSymbol = marketSymbol;
         this.indicator = indicator;
         this.currentPrice = currentPrice;
         this.time = time;
+    }
+
+    public Alarm() {
     }
 
     public Long getId() {

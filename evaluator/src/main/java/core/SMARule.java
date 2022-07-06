@@ -59,7 +59,6 @@ public class SMARule implements Rule {
                 Field f = candleData.get(i).getClass().getDeclaredField(fieldName);
                 f.setAccessible(true);
                 result += (float) f.get(candleData.get(i));
-//                result+=(float) candleData.get(i).getClass().getDeclaredMethod(fieldName).;
             }catch (Exception e){
                 e.printStackTrace();
             }

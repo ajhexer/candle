@@ -5,6 +5,7 @@ import models.Rule;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +50,14 @@ public class Evaluator implements Runnable {
                     new Thread(() -> {
                         synchronized (candleData.get(marketSymbol)) {
                             if (rule.evaluate(candleData.get(marketSymbol)) != null) {
-                                System.out.println(rule.evaluate(candleData.get(marketSymbol)));
+                                try (var session = HibernateUtil.getSessionFactory().openSession()){
+                                    session.beginTransaction();
+                                    session.save(rule.evaluate(candleData.get(marketSymbol)));
+                                    session.getTransaction().commit();
+                                }catch (Exception e){
+                                    System.out.println("An error occurred in saving alarm");
+                                }
+
                             }
                         }
                     }).start();
