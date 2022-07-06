@@ -25,15 +25,20 @@ public class Collector implements Runnable{
                 e.printStackTrace();
             }
             var candles = this.dataExtractor.getCandleData(Long.toString(System.currentTimeMillis() / 1000L - 60), Long.toString((System.currentTimeMillis() / 1000L) ));
-            for (CandleData candle : candles) {
-                try {
-                    System.out.println(candle.getOpeningPrice());
-                    this.producer.Send(new ProducerRecord<>(topicName, candle.getTimeStamp(), candle));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    break;
+            try{
+                for (CandleData candle : candles) {
+                    try {
+                        System.out.println("Open: " + candle.getOpeningPrice() + " " + "Close: " + candle.getClosingPrice() + " " + "Market: " + candle.getMarketSymbol());
+                        this.producer.Send(new ProducerRecord<>(topicName, candle.getTimeStamp(), candle));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        break;
+                    }
                 }
+            }catch (Exception e){
+                e.printStackTrace();
             }
+
         }
     }
 }

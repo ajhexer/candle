@@ -11,7 +11,7 @@ public class CandleSerializer implements Serializer<CandleData> {
 
     @Override
     public byte[] serialize(String s, CandleData candleData) {
-        ByteBuffer buffer = ByteBuffer.allocate(8 + 6*4);
+        ByteBuffer buffer = ByteBuffer.allocate(8 + 6*4 + 2*candleData.getMarketSymbol().length());
         buffer.putLong(candleData.getTimeStamp());
         buffer.putFloat(candleData.getOpeningPrice());
         buffer.putFloat(candleData.getClosingPrice());
@@ -19,6 +19,7 @@ public class CandleSerializer implements Serializer<CandleData> {
         buffer.putFloat(candleData.getLowestPrice());
         buffer.putFloat(candleData.getVolume());
         buffer.putFloat(candleData.getAmount());
+        buffer.put(candleData.getMarketSymbol().getBytes());
         return buffer.array();
     }
 

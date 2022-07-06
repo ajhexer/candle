@@ -17,7 +17,8 @@ public class CandleDeserializer implements Deserializer<CandleData> {
         var lowestPrice = buffer.getFloat();
         var volume = buffer.getFloat();
         var amount = buffer.getFloat();
-        return new CandleData(timeStamp, openingPrice, closingPrice, highestPrice, lowestPrice, volume, amount);
+        var marketSymbol = buffer.asCharBuffer().toString();
+        return new CandleData(timeStamp, openingPrice, closingPrice, highestPrice, lowestPrice, volume, amount, marketSymbol);
     }
 
     @Override
