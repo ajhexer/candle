@@ -19,6 +19,8 @@ public class Alarm {
     private Long id;
     @Column(name = "ALARM_NAME")
     private String alarmName;
+    @Column(name = "INDICATOR")
+    private String indicator;
     @Column(name = "MARKET_SYMBOL")
     private String marketSymbol;
     @Column(name = "CURRENT_PRICE")
@@ -26,9 +28,10 @@ public class Alarm {
     @Column(name = "TIME")
     private Time time;
 
-    public Alarm(String alarmName, String marketSymbol, float currentPrice, Time time) {
+    public Alarm(String alarmName, String marketSymbol, String indicator, float currentPrice, Time time) {
         this.alarmName = alarmName;
         this.marketSymbol = marketSymbol;
+        this.indicator = indicator;
         this.currentPrice = currentPrice;
         this.time = time;
     }

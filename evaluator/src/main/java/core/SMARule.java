@@ -38,28 +38,26 @@ public class SMARule implements Rule {
         searchObject.setTimeStamp(searchObject.getTimeStamp()+60*(interval1-interval2));
         var index2 = Collections.binarySearch(candleData, searchObject, Comparator.comparingLong(CandleData::getTimeStamp));
 
-        float sum1 = 0;
-        for(int i=index1; i<candleData.size(); i++){
-            try {
-                sum1+=(float)candleData.get(i).getClass().getDeclaredField(fieldName1).get(candleData.get(i));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        sum1/=(candleData.size()-index1);
 
-        float sum2 = 0;
-        for(int i=index2; i<candleData.size(); i++){
-            try {
-                sum2+=(float)candleData.get(i).getClass().getDeclaredField(fieldName2).get(candleData.get(i));
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        var sum1 = getAverage(candleData, index1, fieldName1);
+        var sum2 = getAverage(candleData, index2, fieldName2);
+
         if (comparator.compare(sum1, sum2)<0){
             return new Alarm();
         }
+        
         return null;
+    }
 
+    private float getAverage(ArrayList<CandleData> candleData, int index, String fieldName){
+        float result = 0;
+        for(int i=index; i<candleData.size(); i++){
+            try{
+                result += (float) candleData.get(i).getClass().getDeclaredField(fieldName).get(candleData.get(i));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return result/(candleData.size()-index);
     }
 }
