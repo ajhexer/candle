@@ -1,0 +1,17 @@
+smas:
+    - name: "RuleA"
+      market: "BTC-USDT"
+      fieldName1: "openingPrice"
+      fieldName2: "closingPrice"
+      timeInterval1: 60
+      timeInterval2: 50
+      alarmCondition: "greater"
+
+    - name: "RuleC"
+      market: "BTC-USDT"
+      fieldName1: "closingPrice"
+      fieldName2: "closingPrice"
+      timeInterval1: 60
+      timeInterval2: 50
+      alarmCondition: "greater"
+
