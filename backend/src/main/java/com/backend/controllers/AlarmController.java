@@ -3,10 +3,7 @@ package com.backend.controllers;
 
 import com.backend.utils.HibernateUtil;
 import com.evaluator.models.Alarm;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -22,5 +19,11 @@ public class AlarmController {
         criteria.from(Alarm.class);
         var alarms = session.createQuery(criteria).getResultList();
         return (ArrayList<Alarm>) alarms;
+    }
+    @GetMapping("/alarms/{id}")
+    public Alarm getAlarm(@PathVariable("id") int id) {
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var alarm = session.get(Alarm.class, id);
+        return alarm;
     }
 }
