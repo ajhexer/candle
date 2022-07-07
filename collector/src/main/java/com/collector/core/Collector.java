@@ -1,9 +1,9 @@
-package core;
+package com.collector.core;
 
-import model.CandleData;
-import model.DataExtractor;
+import com.collector.models.CandleData;
+import com.collector.models.DataExtractor;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import utils.ProducerUtil;
+import com.collector.utils.ProducerUtil;
 
 public class Collector implements Runnable{
     private ProducerUtil producer;

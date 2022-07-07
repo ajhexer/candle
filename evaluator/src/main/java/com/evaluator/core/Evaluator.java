@@ -1,11 +1,11 @@
-package core;
+package com.evaluator.core;
 
-import model.CandleData;
-import models.Rule;
+import com.collector.models.CandleData;
+import com.evaluator.models.Rule;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import utils.HibernateUtil;
+import com.evaluator.utils.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

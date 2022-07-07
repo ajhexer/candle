@@ -1,16 +1,14 @@
-package core;
+package com.evaluator.core;
 
-import model.CandleData;
-import models.Alarm;
-import models.Rule;
+import com.collector.models.CandleData;
+import com.evaluator.models.Alarm;
+import com.evaluator.models.Rule;
 
 import java.lang.reflect.Field;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.logging.Logger;
 
 public class SMARule implements Rule {
     private String ruleName;

@@ -22,7 +22,7 @@
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <!-- Annotated entity classes -->
-        <mapping class="models.Alarm"/>
+        <mapping class="com.evaluator.models.Alarm"/>
 
     </session-factory>
 </hibernate-configuration>

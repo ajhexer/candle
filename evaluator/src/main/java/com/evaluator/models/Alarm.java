@@ -1,11 +1,14 @@
-package models;
+package com.evaluator.models;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Time;
 
 @Entity
+@Data
+@Table(name = "Alarms")
 public class Alarm {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

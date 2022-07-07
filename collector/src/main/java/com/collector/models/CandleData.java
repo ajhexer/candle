@@ -1,4 +1,4 @@
-package model;
+package com.collector.models;
 
 public class CandleData implements Cloneable{
     private long timeStamp;
