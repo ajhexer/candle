@@ -1,6 +1,6 @@
-package models;
+package com.evaluator.models;
 
-import model.CandleData;
+import com.collector.models.CandleData;
 
 import java.util.ArrayList;
 

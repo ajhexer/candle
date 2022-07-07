@@ -1,4 +1,4 @@
-package model;
+package com.collector.models;
 
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;

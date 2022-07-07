@@ -1,6 +1,6 @@
-import core.Collector;
-import model.DataExtractor;
-import utils.ProducerUtil;
+import com.collector.core.Collector;
+import com.collector.models.DataExtractor;
+import com.collector.utils.ProducerUtil;
 
 import java.util.Properties;
 
