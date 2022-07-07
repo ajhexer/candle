@@ -16,11 +16,11 @@ public class Collector implements Runnable{
     @Override
     public void run() {
         while(true){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             var candles = this.dataExtractor.getCandleData(Long.toString(System.currentTimeMillis() / 1000L - 60), Long.toString((System.currentTimeMillis() / 1000L) ));
             try{
                 for (CandleData candle : candles) {

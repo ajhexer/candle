@@ -7,38 +7,51 @@ import org.apache.tomcat.util.bcel.classfile.JavaClass;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Properties;
 
 
 public class Main {
     public static void main(String[] args) {
-//        String topicName = "Topic-A";
-//        Properties prop = new Properties();
-//        prop.put("bootstrap.servers", "localhost:9092");
-//        prop.put("key.serializer", "org.apache.kafka.common.serialization.LongSerializer");
-//        prop.put("value.serializer", "model.CandleSerializer");
-//        Thread thread = new Thread(new Collector(new ProducerUtil(prop, 10L, topicName), new DataExtractor("https://api.kucoin.com/api/v1/market/candles", "symbol", "ETH-BTC", "startAt", "endAt", "type", "1min")));
-//        Thread thread2 = new Thread(new Collector(new ProducerUtil(prop, 10L, topicName), new DataExtractor("https://api.kucoin.com/api/v1/market/candles", "symbol", "BTC-USDT", "startAt", "endAt", "type", "1min")));
-//        thread.start();
-//        thread2.start();
-//        var properties = new Properties();
-//        try(InputStream input = JavaClass.class.getClassLoader().getResourceAsStream("kafka.properties")){
-//            properties.load(input);
-//            System.out.println(properties.getProperty("bootstrap.servers"));
-//        }catch (Exception e){
-//            System.out.println("Error: An error occurred when loading properties files");
-//            return;
-//        }
-//        var topicName = properties.getProperty("topicName");
-//        var kafkaProperties = new Properties();
-//        kafkaProperties.put("bootstrap.servers", properties.getProperty("bootstrap.servers"));
-//        kafkaProperties.put("key.serializer", properties.getProperty("key.serializer"));
-//        kafkaProperties.put("value.serializer", properties.getProperty("value.serializer"));
+        var properties = new Properties();
+        try(InputStream input = JavaClass.class.getClassLoader().getResourceAsStream("kafka.properties")){
+            properties.load(input);
+        }catch (Exception e){
+            System.out.println("Error: An error occurred when loading properties files");
+            return;
+        }
+        var topicName = properties.getProperty("topicName");
+        var kafkaProperties = new Properties();
+        kafkaProperties.put("bootstrap.servers", properties.getProperty("bootstrap.servers"));
+        kafkaProperties.put("key.serializer", properties.getProperty("key.serializer"));
+        kafkaProperties.put("value.serializer", properties.getProperty("value.serializer"));
+
+        var apiProperties = new Properties();
+        try(InputStream input = JavaClass.class.getClassLoader().getResourceAsStream("api.properties")){
+            apiProperties.load(input);
+        }catch (Exception e){
+            System.out.println("Error: An error occurred while loading api configs");
+        }
+        var apiAddress = apiProperties.getProperty("apiAddress");
+        var symbolQuery = apiProperties.getProperty("symbolQuery");
+        var startQuery = apiProperties.getProperty("startQuery");
+        var endQuery = apiProperties.getProperty("endQuery");
+        var intervalQuery = apiProperties.getProperty("intervalQuery");
+        var intervalValue = apiProperties.getProperty("intervalValue");
+        var timeout = Long.parseLong(apiProperties.getProperty("timeout"));
+
+        var markets = new HashSet<String>();
+
         ConfigHandler.loadConfig();
         var config = ConfigHandler.getSMAConfigs();
         for(SMA s: config){
-            System.out.println(s);
+            markets.add(s.getMarket());
         }
+
+        for(String market: markets){
+            new Thread(new Collector(new ProducerUtil(kafkaProperties, timeout, topicName), new DataExtractor(apiAddress, symbolQuery, market, startQuery, endQuery, intervalQuery, intervalValue))).start();
+        }
+
 
     }
 }
