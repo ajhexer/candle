@@ -1,19 +1,16 @@
 package com.collector.core;
 
 import com.collector.models.CandleData;
-import com.collector.models.DataExtractor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import com.collector.utils.ProducerUtil;
 
 public class Collector implements Runnable{
     private ProducerUtil producer;
     private DataExtractor dataExtractor;
-    private String topicName;
 
-    public Collector(ProducerUtil producer, DataExtractor dataExtractor, String topicName) {
+    public Collector(ProducerUtil producer, DataExtractor dataExtractor) {
         this.producer = producer;
         this.dataExtractor = dataExtractor;
-        this.topicName = topicName;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class Collector implements Runnable{
                 for (CandleData candle : candles) {
                     try {
                         System.out.println("Open: " + candle.getOpeningPrice() + " " + "Close: " + candle.getClosingPrice() + " " + "Market: " + candle.getMarketSymbol());
-                        this.producer.Send(new ProducerRecord<>(topicName, candle.getTimeStamp(), candle));
+                        this.producer.Send(candle.getTimeStamp(), candle);
                     } catch (Exception e) {
                         e.printStackTrace();
                         break;

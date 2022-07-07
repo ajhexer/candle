@@ -1,5 +1,6 @@
-package com.collector.models;
+package com.collector.core;
 
+import com.collector.models.CandleData;
 import org.json.JSONObject;
 
 import java.net.URI;
