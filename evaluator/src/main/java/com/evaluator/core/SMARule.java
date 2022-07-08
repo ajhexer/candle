@@ -7,6 +7,7 @@ import com.evaluator.models.Rule;
 import java.lang.reflect.Field;
 import java.sql.Time;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class SMARule implements Rule {
@@ -49,10 +50,10 @@ public class SMARule implements Rule {
 //        return null;
         var candleMap = (TreeMap<Long, CandleData>) candleData;
         var timeStamp = candleMap.lastEntry().getValue().getTimeStamp();
-        var sum1 = getAverage(candleMap, fieldName1, timeStamp - interval1);
-        var sum2 = getAverage(candleMap, fieldName2, timeStamp - interval2);
+        var sum1 = getAverage(candleMap, fieldName1, timeStamp - interval1*60);
+        var sum2 = getAverage(candleMap, fieldName2, timeStamp - interval2*60);
 
-        if (comparator.compare(sum1, sum2) >= 0) {
+        if (comparator.compare(sum1, sum2) > 0) {
             return new Alarm(ruleName, marketSymbol, "SMA", candleMap.lastEntry().getValue().getClosingPrice(), new Time(System.currentTimeMillis()));
         }
         return null;
@@ -84,5 +85,26 @@ public class SMARule implements Rule {
         }
         return result / data.values().size();
 
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SMARule smaRule = (SMARule) o;
+        return ruleName.equals(smaRule.ruleName) && marketSymbol.equals(smaRule.marketSymbol);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ruleName, marketSymbol);
+    }
+
+    @Override
+    public String toString() {
+        return "SMARule{" +
+                "ruleName='" + ruleName + '\'' +
+                '}';
     }
 }

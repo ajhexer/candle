@@ -1,7 +1,13 @@
+import com.collector.models.CandleData;
+import com.config.Config;
 import com.config.ConfigHandler;
 import com.config.SMA;
 import com.evaluator.core.Evaluator;
+import com.evaluator.utils.ConsumerUtil;
 import com.evaluator.utils.SMARuleFactory;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.tomcat.util.bcel.classfile.JavaClass;
 
 import java.io.InputStream;
@@ -21,16 +27,20 @@ public class Main {
         var topicName = properties.getProperty("topicName");
         var kafkaProperties = new Properties();
         kafkaProperties.put("bootstrap.servers", properties.getProperty("bootstrap.servers"));
-        kafkaProperties.put("key.serializer", properties.getProperty("key.serializer"));
-        kafkaProperties.put("value.serializer", properties.getProperty("value.serializer"));
+        kafkaProperties.put("key.deserializer", properties.getProperty("key.deserializer"));
+        kafkaProperties.put("value.deserializer", properties.getProperty("value.deserializer"));
+        kafkaProperties.put("group.id", "GroupA");
 
-        var evaluator = new Evaluator(properties, topicName);
+        var evaluator = new Evaluator(new ConsumerUtil(new KafkaConsumer<Long, CandleData>(kafkaProperties), topicName));
+        ConfigHandler.loadConfig();
         var configs = ConfigHandler.getSMAConfigs();
         for (SMA s : configs) {
             var smaFactory = new SMARuleFactory(s.getName(), s.getFieldName1(), s.getFieldName2(), s.getTimeInterval1(), s.getTimeInterval2(), s.getAlarmCondition(), s.getMarket());
             evaluator.AddRule(s.getMarket(), smaFactory);
+
         }
         new Thread(evaluator).start();
+
     }
 }
 

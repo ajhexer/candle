@@ -51,7 +51,5 @@ public class Main {
         for(String market: markets){
             new Thread(new Collector(new ProducerUtil(kafkaProperties, timeout, topicName), new DataExtractor(apiAddress, symbolQuery, market, startQuery, endQuery, intervalQuery, intervalValue))).start();
         }
-
-
     }
 }
