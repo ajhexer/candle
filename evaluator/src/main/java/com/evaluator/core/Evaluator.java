@@ -2,6 +2,7 @@ package com.evaluator.core;
 
 import com.collector.models.CandleData;
 import com.evaluator.models.Rule;
+import com.evaluator.utils.RuleFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -23,11 +24,11 @@ public class Evaluator implements Runnable {
         this.topicName = topicName;
     }
 
-    public void AddRule(String market, Rule rule) {
+    public void AddRule(String market, RuleFactory ruleFactory) {
         if (!rules.containsKey(market)) {
             rules.put(market, new ArrayList<Rule>());
         }
-        rules.get(market).add(rule);
+        rules.get(market).add(ruleFactory.createRule());
     }
 
     public void run() {

@@ -10,9 +10,9 @@ public class SMA {
     @JsonProperty
     private String fieldName2;
     @JsonProperty
-    private int timeInterval1;
+    private long timeInterval1;
     @JsonProperty
-    private int timeInterval2;
+    private long timeInterval2;
     @JsonProperty
     private String alarmCondition;
     @JsonProperty
@@ -30,11 +30,11 @@ public class SMA {
         return fieldName2;
     }
 
-    public int getTimeInterval1() {
+    public long getTimeInterval1() {
         return timeInterval1;
     }
 
-    public int getTimeInterval2() {
+    public long getTimeInterval2() {
         return timeInterval2;
     }
 

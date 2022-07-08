@@ -4,6 +4,8 @@ import com.collector.models.CandleData;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import com.collector.utils.ProducerUtil;
 
+import java.util.ArrayList;
+
 public class Collector implements Runnable{
     private ProducerUtil producer;
     private DataExtractor dataExtractor;
@@ -15,13 +17,9 @@ public class Collector implements Runnable{
 
     @Override
     public void run() {
+
         while(true){
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-            var candles = this.dataExtractor.getCandleData(Long.toString(System.currentTimeMillis() / 1000L - 60), Long.toString((System.currentTimeMillis() / 1000L) ));
+            var candles = ExtractCandles(System.currentTimeMillis() / 1000L - 60, System.currentTimeMillis() / 1000L);
             try{
                 for (CandleData candle : candles) {
                     try {
@@ -33,9 +31,20 @@ public class Collector implements Runnable{
                     }
                 }
             }catch (Exception e){
+                System.out.println("Error: An error occurred in retrieving candle data");
+            }
+
+            try {
+                Thread.sleep(60*1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
         }
     }
+
+    private ArrayList<CandleData> ExtractCandles(long startTime, long endTime){
+        return this.dataExtractor.getCandleData(Long.toString(startTime), Long.toString(endTime));
+    }
+
 }
