@@ -10,21 +10,6 @@ import java.util.Properties;
 public class Main {
     public static void main(String[] args) {
 
-//        var alarm1 = new Alarm("ALARM1", "BTC", "SMA", 12, new Time(System.currentTimeMillis()));
-//        var alarm2 = new Alarm("ALARM2", "ETHtobtc", "SMA", 10, new Time(System.currentTimeMillis()));
-//        var session = HibernateUtil.getSessionFactory().openSession();
-//        session.beginTransaction();
-//        session.save(alarm1);
-//        session.flush();
-//        session.persist(alarm2);
-//        session.getTransaction().commit();
-//        var alarm = (Alarm) session.get(Alarm.class, 2);
-//        System.out.println(alarm.getMarketSymbol());
-//        try {
-//            Thread.sleep(100000);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
 
         var properties = new Properties();
         try (InputStream input = JavaClass.class.getClassLoader().getResourceAsStream("kafka.properties")) {
@@ -45,6 +30,7 @@ public class Main {
             var smaFactory = new SMARuleFactory(s.getName(), s.getFieldName1(), s.getFieldName2(), s.getTimeInterval1(), s.getTimeInterval2(), s.getAlarmCondition(), s.getMarket());
             evaluator.AddRule(s.getMarket(), smaFactory);
         }
+        new Thread(evaluator).start();
     }
 }
 
