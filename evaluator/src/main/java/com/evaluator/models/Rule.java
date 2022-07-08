@@ -3,7 +3,9 @@ package com.evaluator.models;
 import com.collector.models.CandleData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public interface Rule {
-    Alarm evaluate(ArrayList<CandleData> candleData);
+    Alarm evaluate(Object candleData);
+
 }

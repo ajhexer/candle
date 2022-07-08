@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.TreeMap;
 
 class SMARuleTest {
 
@@ -23,13 +24,15 @@ class SMARuleTest {
             }
         }, "SMA", "BTC-USDT");
 
-        ArrayList<CandleData> mockCandleData = new ArrayList<>();
-        mockCandleData.add(new CandleData(System.currentTimeMillis()/1000L-60, 2f, 1f, 4f, 4f, 2f, 6f, "BTC"));
-        mockCandleData.add(new CandleData(System.currentTimeMillis()/1000L, 2f, 1f, 4f, 4f, 2f, 6f, "BTC"));
+        TreeMap<Long, CandleData> mockCandleData = new TreeMap<>();
+        var candle1 = new CandleData(System.currentTimeMillis()/1000L-60, 2f, 1f, 4f, 4f, 2f, 6f, "BTC");
+        var candle2 = new CandleData(System.currentTimeMillis()/1000L, 2f, 1f, 4f, 4f, 2f, 6f, "BTC");
+        mockCandleData.put(candle1.getTimeStamp(), candle1);
+        mockCandleData.put(candle2.getTimeStamp(), candle2);
         Assertions.assertNotNull(mockRule.evaluate(mockCandleData));
         var alarm = mockRule.evaluate(mockCandleData);
         Assertions.assertEquals("BTC-USDT", alarm.getMarketSymbol());
         Assertions.assertEquals("SMA", alarm.getIndicator());
-        Assertions.assertEquals(mockCandleData.get(1).getClosingPrice(), alarm.getCurrentPrice());
+        Assertions.assertEquals(mockCandleData.firstEntry().getValue().getClosingPrice(), alarm.getCurrentPrice());
     }
 }

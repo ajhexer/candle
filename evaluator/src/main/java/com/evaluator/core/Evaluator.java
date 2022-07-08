@@ -8,15 +8,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import com.evaluator.utils.HibernateUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Properties;
+import java.util.*;
 
 public class Evaluator implements Runnable {
     private final KafkaConsumer<Long, CandleData> consumer;
     private final HashMap<String, ArrayList<Rule>> rules = new HashMap<String, ArrayList<Rule>>();
-    private final HashMap<String, ArrayList<CandleData>> candleData = new HashMap<String, ArrayList<CandleData>>();
+    private final HashMap<String /* market */, TreeMap<Long, CandleData>> candleData = new HashMap<String, TreeMap<Long, CandleData>>();
     private final String topicName;
 
     public Evaluator(Properties props, String topicName) {
@@ -39,10 +36,10 @@ public class Evaluator implements Runnable {
             for (ConsumerRecord<Long, CandleData> record : records) {
                 CandleData candle = record.value();
                 if (candleData.containsKey(candle.getMarketSymbol())) {
-                    candleData.get(candle.getMarketSymbol()).add(candle);
+                    candleData.get(candle.getMarketSymbol()).put(candle.getTimeStamp(), candle);
                 } else {
-                    ArrayList<CandleData> candleList = new ArrayList<CandleData>();
-                    candleList.add(candle);
+                    TreeMap<Long, CandleData> candleList = new TreeMap<>();
+                    candleList.put(candle.getTimeStamp(), candle);
                     candleData.put(candle.getMarketSymbol(), candleList);
                 }
             }
