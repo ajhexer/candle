@@ -4,10 +4,8 @@ import com.collector.models.CandleData;
 import com.evaluator.models.Rule;
 import com.evaluator.utils.ConsumerUtil;
 import com.evaluator.utils.RuleFactory;
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import com.evaluator.utils.HibernateUtil;
 
 import java.util.*;

@@ -33,21 +33,6 @@ public class SMARule implements Rule {
 
     @Override
     public Alarm evaluate(Object candleData) {
-//        Collections.sort(candleData, Comparator.comparingLong(CandleData::getTimeStamp));
-//        var searchObject = (CandleData)candleData.get(candleData.size()-1).clone();
-//        searchObject.setTimeStamp(searchObject.getTimeStamp()-60*interval1);
-//        var index1 = Collections.binarySearch(candleData, searchObject, Comparator.comparingLong(CandleData::getTimeStamp));
-//        searchObject.setTimeStamp(searchObject.getTimeStamp()+60*(interval1-interval2));
-//        var index2 = Collections.binarySearch(candleData, searchObject, Comparator.comparingLong(CandleData::getTimeStamp));
-//
-//
-//        var sum1 = getAverage(candleData, index1, fieldName1);
-//        var sum2 = getAverage(candleData, index2, fieldName2);
-//        if (comparator.compare(sum1, sum2)>=0){
-//            return new Alarm(ruleName, marketSymbol, "SMA", candleData.get(candleData.size()-1).getClosingPrice(), new Time(System.currentTimeMillis()));
-//        }
-//
-//        return null;
         var candleMap = (TreeMap<Long, CandleData>) candleData;
         var timeStamp = candleMap.lastEntry().getValue().getTimeStamp();
         var sum1 = getAverage(candleMap, fieldName1, timeStamp - interval1*60);
@@ -61,17 +46,6 @@ public class SMARule implements Rule {
     }
 
     private float getAverage(TreeMap<Long, CandleData> dataTreeMap, String fieldName, Long timeStamp) {
-//        float result = 0;
-//        for(int i=index; i<candleData.size(); i++){
-//            try{
-//                Field f = candleData.get(i).getClass().getDeclaredField(fieldName);
-//                f.setAccessible(true);
-//                result += (float) f.get(candleData.get(i));
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
-//        return result/(candleData.size()-index);
         var data = dataTreeMap.tailMap(timeStamp);
         float result = 0;
         for (CandleData c : data.values()) {

@@ -1,7 +1,6 @@
 package com.collector.core;
 
 import com.collector.models.CandleData;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import com.collector.utils.ProducerUtil;
 
 import java.util.ArrayList;
