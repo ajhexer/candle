@@ -43,7 +43,7 @@ public class DataExtractor {
             }
             return res;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error: An error occurred in retrieving data");
         }
         return null;
     }

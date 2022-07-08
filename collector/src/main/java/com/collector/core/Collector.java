@@ -35,7 +35,7 @@ public class Collector implements Runnable{
             }
 
             try {
-                Thread.sleep(60*1000);
+                Thread.sleep(1000*60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

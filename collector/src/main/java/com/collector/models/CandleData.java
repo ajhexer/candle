@@ -68,4 +68,18 @@ public class CandleData implements Cloneable{
             return new CandleData(this.timeStamp, this.openingPrice, this.closingPrice, this.highestPrice, this.lowestPrice, this.volume, this.amount, this.marketSymbol);
         }
     }
+
+    @Override
+    public String toString() {
+        return "CandleData{" +
+                "timeStamp=" + timeStamp +
+                ", openingPrice=" + openingPrice +
+                ", closingPrice=" + closingPrice +
+                ", highestPrice=" + highestPrice +
+                ", lowestPrice=" + lowestPrice +
+                ", volume=" + volume +
+                ", amount=" + amount +
+                ", marketSymbol='" + marketSymbol + '\'' +
+                '}';
+    }
 }
