@@ -29,6 +29,10 @@ public class SMARuleFactory implements RuleFactory {
         return new SMARule(this.fieldName1, this.fieldName2, this.interval1, this.interval2, createComparator(alarmCondition), this.ruleName, this.marketSymbol);
     }
 
+    /**
+     * @param alarmCondition The condition to compare two fields
+     * @return The comparator to compare two fields
+     */
     private Comparator<Float> createComparator(String alarmCondition) {
         return switch (alarmCondition) {
             case "greater" -> (o1, o2) -> {

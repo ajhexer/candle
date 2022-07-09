@@ -20,6 +20,15 @@ public class SMARule implements Rule {
     private String marketSymbol;
 
 
+    /**
+     * @param fieldName1    The field name of the first field to be compared
+     * @param fieldName2    The field name of the second field to be compared
+     * @param interval1     The interval of the first field to calculate average from
+     * @param interval2     The interval of the second field to calculate average from
+     * @param comparator    The comparator to compare the two fields
+     * @param ruleName      The name of the rule
+     * @param marketSymbol  The market symbol of the rule
+     */
     public SMARule(String fieldName1, String fieldName2, Long interval1, Long interval2, Comparator<Float> comparator, String ruleName, String marketSymbol) {
         this.fieldName1 = fieldName1;
         this.fieldName2 = fieldName2;
