@@ -15,3 +15,11 @@ smas:
       timeInterval2: 1
       alarmCondition: "greater"
 
+    - name: "Rule D"
+      market: "ETH-BTC"
+      fieldName1: "openingPrice"
+      fieldName2: "closingPrice"
+      timeInterval1: 1
+      timeInterval2: 1
+      alarmCondition: "greater"
+

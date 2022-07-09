@@ -20,6 +20,12 @@ public class CandleData implements Cloneable{
         this.amount = amount;
         this.marketSymbol = marketSymbol;
     }
+
+    /**
+     * @param arr The array that generated from retrieved json file.
+     * @param marketSymbol Market symbol for that candle
+     * @return One Candle data
+     */
     public static CandleData BuildFromArray(String[] arr, String marketSymbol) {
         return new CandleData(Long.parseLong(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), Float.parseFloat(arr[5]), Float.parseFloat(arr[6]), marketSymbol);
     }

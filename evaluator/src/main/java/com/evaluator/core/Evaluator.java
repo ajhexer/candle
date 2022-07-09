@@ -10,22 +10,29 @@ import com.evaluator.utils.HibernateUtil;
 
 import java.util.*;
 
+
+/**
+ * The class in which we implement runnable method "run" so that it evaluates rules every 1 minute
+ */
 public class Evaluator implements Runnable {
     private final ConsumerUtil consumerUtil;
-    private final HashMap<String, ArrayList<Rule>> rules = new HashMap<String, ArrayList<Rule>>();
+    private final HashMap<String /* market */, ArrayList<Rule>> rules = new HashMap<String, ArrayList<Rule>>();
     private final HashMap<String /* market */, TreeMap<Long, CandleData>> candleData = new HashMap<String, TreeMap<Long, CandleData>>();
 
     public Evaluator(ConsumerUtil consumerUtil) {
         this.consumerUtil = consumerUtil;
     }
 
+    /**
+     * @param market The market symbol for that specific rule
+     * @param ruleFactory Abstract factory that creates rule
+     */
     public void AddRule(String market, RuleFactory ruleFactory) {
         if (!rules.containsKey(market)) {
             rules.put(market, new ArrayList<Rule>());
         }
         var rule = ruleFactory.createRule();
-        rules.get(market).add(ruleFactory.createRule());
-
+        rules.get(market).add(rule);
     }
 
     public void run() {
@@ -64,7 +71,7 @@ public class Evaluator implements Runnable {
                     }
                 }
             }catch (Exception e){
-
+                System.out.println("An error occurred in evaluating rules");
             }
 
             try {

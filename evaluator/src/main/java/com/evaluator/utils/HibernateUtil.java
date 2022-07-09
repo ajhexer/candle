@@ -7,6 +7,10 @@ public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
 
+
+    /**
+     * @return Hibernate session factory
+     */
     public static synchronized SessionFactory getSessionFactory() {
         if (sessionFactory != null) {
             return sessionFactory;

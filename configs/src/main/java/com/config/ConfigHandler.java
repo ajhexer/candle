@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class ConfigHandler {
     private static Config config;
 
+    /**
+     * Load configs from file
+     */
     public static void loadConfig(){
         if(config!=null){
             return;
@@ -23,7 +26,10 @@ public class ConfigHandler {
         }
     }
 
-
+    /**
+     *
+     * @return Rules related to SMA indicator
+     */
     public static ArrayList<SMA> getSMAConfigs(){
         if(config==null){
             return null;

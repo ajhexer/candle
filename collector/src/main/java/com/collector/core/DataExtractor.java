@@ -28,6 +28,11 @@ public class DataExtractor {
         this.intervalValue = intervalValue;
     }
 
+    /**
+     * @param startValue The time from when it gets candles
+     * @param endValue The time until when it gets candles
+     * @return ArrayList of candles corresponds to provided start and end time.
+     */
     public ArrayList<CandleData> getCandleData(String startValue, String endValue) {
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(URI.create(url + "?" + symbolQuery + "=" + symbolValue + "&" + startQuery + "=" + startValue + "&" + endQuery + "=" + endValue + "&" + intervalQuery + "=" + intervalValue)).header("accept", "application/json").build();

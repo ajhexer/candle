@@ -42,6 +42,11 @@ public class Collector implements Runnable{
         }
     }
 
+    /**
+     * @param startTime The time from when it gets candles
+     * @param endTime The time until when it gets candles
+     * @return ArrayList of candles correspond to provided start and end time;
+     */
     private ArrayList<CandleData> ExtractCandles(long startTime, long endTime){
         return this.dataExtractor.getCandleData(Long.toString(startTime), Long.toString(endTime));
     }
