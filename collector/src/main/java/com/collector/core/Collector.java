@@ -9,6 +9,10 @@ public class Collector implements Runnable{
     private ProducerUtil producer;
     private DataExtractor dataExtractor;
 
+    /**
+     * @param producer The producer that sends data to the Kafka topic
+     * @param dataExtractor The data extractor that extracts data from provided api
+     */
     public Collector(ProducerUtil producer, DataExtractor dataExtractor) {
         this.producer = producer;
         this.dataExtractor = dataExtractor;
@@ -25,7 +29,7 @@ public class Collector implements Runnable{
                         System.out.println("Open: " + candle.getOpeningPrice() + " " + "Close: " + candle.getClosingPrice() + " " + "Market: " + candle.getMarketSymbol());
                         this.producer.Send(candle.getTimeStamp(), candle);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("Error: " + e.getMessage());
                         break;
                     }
                 }
@@ -36,7 +40,7 @@ public class Collector implements Runnable{
             try {
                 Thread.sleep(1000*60);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Error: An error occurred in sleeping");
             }
 
         }

@@ -31,6 +31,10 @@ public class SMARule implements Rule {
 
     }
 
+    /**
+     * @param candleData The candle data that will be evaluated
+     * @return Alarm if the rule is triggered, otherwise null
+     */
     @Override
     public Alarm evaluate(Object candleData) {
         var candleMap = (TreeMap<Long, CandleData>) candleData;
@@ -45,6 +49,12 @@ public class SMARule implements Rule {
 
     }
 
+    /**
+     * @param dataTreeMap Tree map of candle data
+     * @param fieldName The name of the field to be averaged
+     * @param timeStamp The time stamp of candle form which to calculate the average
+     * @return
+     */
     private float getAverage(TreeMap<Long, CandleData> dataTreeMap, String fieldName, Long timeStamp) {
         var data = dataTreeMap.tailMap(timeStamp);
         float result = 0;

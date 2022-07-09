@@ -10,6 +10,16 @@ public class CandleData implements Cloneable{
     private float amount;
     private String marketSymbol;
 
+    /**
+     * @param timeStamp The time stamp of the candle
+     * @param openingPrice The opening price of the candle
+     * @param closingPrice The closing price of the candle
+     * @param highestPrice The highest price of the candle
+     * @param lowestPrice The lowest price of the candle
+     * @param volume The volume of the candle
+     * @param amount The amount of the candle
+     * @param marketSymbol The market symbol of the candle like (BTC-USDT, ETH-BTC, etc)
+     */
     public CandleData(long timeStamp, float openingPrice, float closingPrice, float highestPrice, float lowestPrice, float volume, float amount, String marketSymbol) {
         this.timeStamp = timeStamp;
         this.openingPrice = openingPrice;

@@ -39,6 +39,9 @@ public class Evaluator implements Runnable {
 
         while (true) {
             ConsumerRecords<Long, CandleData> records = consumerUtil.getConsumer().poll(100);
+            /**
+             * @param record The record that is received from the Kafka topic
+             */
             for (ConsumerRecord<Long, CandleData> record : records) {
                 CandleData candle = record.value();
                 if (candleData.containsKey(candle.getMarketSymbol())) {
@@ -52,6 +55,9 @@ public class Evaluator implements Runnable {
             }
 
             try {
+                /**
+                 * Evaluate rules for each market
+                 */
                 for (String marketSymbol : candleData.keySet()) {
                     for (Rule rule : rules.get(marketSymbol)) {
                         new Thread(() -> {

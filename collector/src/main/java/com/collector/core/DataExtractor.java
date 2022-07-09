@@ -18,6 +18,15 @@ public class DataExtractor {
     private String intervalQuery;
     private String intervalValue;
 
+    /**
+     * @param url The url of the API
+     * @param symbolQuery The query string for the symbol
+     * @param symbolValue The value of the symbol
+     * @param startQuery The query string for the start time
+     * @param endQuery The query string for the end time
+     * @param intervalQuery The query string for the interval
+     * @param intervalValue The value of the interval of candle window
+     */
     public DataExtractor(String url, String symbolQuery, String symbolValue, String startQuery, String endQuery, String intervalQuery, String intervalValue) {
         this.url = url;
         this.symbolQuery = symbolQuery;
